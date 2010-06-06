@@ -79,8 +79,8 @@ class WebserviceView extends Object {
 		if (isset($this->viewVars['debugToolbarJavascript'])) unset($this->viewVars['debugToolbarJavascript']);
 
 		if ($this->params['url']['ext'] == 'json') {
-			header("Pragma: no-cache"); 
-			header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate"); 
+			header("Pragma: no-cache");
+			header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 			header("Last-Modified: " . gmdate('D, d M Y H:i:s') . ' GMT');
 			header('Content-type: application/json');
@@ -95,7 +95,7 @@ class WebserviceView extends Object {
 
 /**
  * Dummy method
- * 
+ *
  * @deprecated deprecated in Webservice view
  */
 	function renderLayout() {
