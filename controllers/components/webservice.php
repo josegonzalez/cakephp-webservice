@@ -1,14 +1,22 @@
 <?php
 /**
- * WebservicesComponent
+ * Webservice Component
  *
  * Triggers the Webservice View
  *
- * @package webservice
- * @author Jose Diaz-Gonzalez
- * @version 1.0
+ * PHP versions 4 and 5
+ *
+ * Copyright 2010, Jose Diaz-Gonzalez
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the below copyright notice.
+ *
+ * @copyright   Copyright 2010, Jose Diaz-Gonzalez
+ * @package     webservice
+ * @subpackage  webservice.controllers.components
+ * @link        http://github.com/josegonzalez/webservice_plugin
+ * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-
 class WebserviceComponent extends Object {
 
 /**
@@ -24,5 +32,5 @@ class WebserviceComponent extends Object {
 			$controller->view = 'Webservice.Webservice';
 		}
 	}
+
 }
-?>

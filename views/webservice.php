@@ -1,4 +1,22 @@
 <?php
+/**
+ * Webservice View Class
+ *
+ * Renders the data as either json or xml
+ *
+ * PHP versions 4 and 5
+ *
+ * Copyright 2010, Jose Diaz-Gonzalez
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the below copyright notice.
+ *
+ * @copyright   Copyright 2010, Jose Diaz-Gonzalez
+ * @package     webservice
+ * @subpackage  webservice.views
+ * @link        http://github.com/josegonzalez/webservice_plugin
+ * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
+ **/
 class WebserviceView extends Object {
 
 /**
@@ -426,5 +444,5 @@ class WebserviceView extends Object {
 	public function isAssoc($variable) {
 		return (is_array($variable) && 0 !== count(array_diff_key($variable, array_keys(array_keys($variable)))));
 	}
+
 }
-?>
