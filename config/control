@@ -1,0 +1,9 @@
+Package: webservice_plugin
+Alias: webservice
+Source: git://github.com/josegonzalez/webservice_plugin.git
+Type: plugin
+Section: api
+Description: CakePHP plugin that takes the data you set and automatically serves it as JSON and XML
+Pre-depends: CakePHP==1.3
+Homepage: http://github.com/josegonzalez/webservice_plugin
+Bugs: http://github.com/josegonzalez/webservice_plugin/issues
