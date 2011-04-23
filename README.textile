@@ -37,6 +37,10 @@ In your plugin directory type
 
 h2. Usage
 
+Specify the extensions you'd like to parse in config/routes.php, for example:
+
+<pre><code>Router::parseExtensions('json');</code></pre>
+
 Attach the @RequestHandler Component@ and the @Webservice Component@ to your controller for an instant _automagic_ webservice:
 
 <pre><code><?php
@@ -48,13 +52,13 @@ class PostsController extends AppController {
 ?>
 </code></pre>
 
-Or simply set the @Webservice View@ class where necessary:
+Or simply set the @Webservice View@ class where necessary (don't forget parseExtensions() and setContent()):
 
 <pre><code><?php
 class PostsController extends AppController {
 
     function index() {
-        $this->View = 'Webservice.Webservice';
+        $this->view = 'Webservice.Webservice';
         $posts = $this->paginate();
         $this->set(compact('posts'));
     }
