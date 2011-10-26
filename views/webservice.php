@@ -100,6 +100,9 @@ class WebserviceView extends Object {
 				unset($this->viewVars[$blacklisted]);
 			}
 		}
+		if(!empty($this->validationErrors)) {
+			$this->viewVars['validationErrors'] = $this->validationErrors;
+		}
 
 		$format = $textarea ? '<textarea>%s</textarea>' : '%s';
 
