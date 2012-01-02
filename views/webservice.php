@@ -100,7 +100,8 @@ class WebserviceView extends Object {
 				unset($this->viewVars[$blacklisted]);
 			}
 		}
-		if(!empty($this->validationErrors)) {
+
+		if (!empty($this->validationErrors)) {
 			$this->viewVars['validationErrors'] = $this->validationErrors;
 		}
 
