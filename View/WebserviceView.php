@@ -22,22 +22,6 @@ App::uses('View', 'View');
 class WebserviceView extends View {
 
 /**
- * XML document encoding
- *
- * @var string
- * @access private
- */
-	public $xml_encoding = 'UTF-8';
-
-/**
- * XML document version
- *
- * @var string
- * @access private
- */
-	public $xml_version = '1.0';
-
-/**
  * List of variables to collect from the associated controller
  *
  * @var array
@@ -47,18 +31,36 @@ class WebserviceView extends View {
 		'viewVars', 'params'
 	);
 
+	protected $_webserviceBlacklistVars = array(
+		'debugToolbarPanels',
+		'debugToolbarJavascript',
+		'webserviceTextarea',
+		'webserviceNoxjson',
+	);
+
+/**
+ * Constructor
+ *
+ * @param Controller $controller A controller object to pull View::_passedVars from.
+ */
+	public function __construct($controller) {
+		if (is_object($controller)) {
+			if (isset($controller->webserviceBlacklistVars)) {
+				$this->_webserviceBlacklistVars = array_merge(
+					$this->_webserviceBlacklistVars,
+					$controller->webserviceBlacklistVars
+				);
+			}
+		}
+		parent::__construct($controller);
+	}
+
 	public function render() {
 		Configure::write('debug', 0);
 		$textarea  = isset($this->viewVars['webserviceTextarea']);
 		$noXjson   = isset($this->viewVars['webserviceNoxjson']);
-		$blacklist = array(
-			'debugToolbarPanels',
-			'debugToolbarJavascript',
-			'webserviceTextarea',
-			'webserviceNoxjson',
-		);
 
-		foreach ($blacklist as $blacklisted) {
+		foreach ($this->_webserviceBlacklistVars as $blacklisted) {
 			if (isset($this->viewVars[$blacklisted])) {
 				unset($this->viewVars[$blacklisted]);
 			}
@@ -74,6 +76,7 @@ class WebserviceView extends View {
 		if (!empty($this->params->params['ext'])) {
 			$ext = $this->params->params['ext'];
 		}
+
 
 		if ($ext == 'json') {
 			$this->_header("Pragma: no-cache");
