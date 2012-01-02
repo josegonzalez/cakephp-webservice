@@ -86,22 +86,42 @@ class WebserviceView extends Object {
 
 	function render() {
 		Configure::write('debug', 0);
-		if (isset($this->viewVars['debugToolbarPanels'])) unset($this->viewVars['debugToolbarPanels']);
-		if (isset($this->viewVars['debugToolbarJavascript'])) unset($this->viewVars['debugToolbarJavascript']);
+		$textarea  = isset($this->viewVars['webserviceTextarea']);
+		$noXjson   = isset($this->viewVars['webserviceNoxjson']);
+		$blacklist = array(
+			'debugToolbarPanels',
+			'debugToolbarJavascript',
+			'webserviceTextarea',
+			'webserviceNoxjson',
+		);
+
+		foreach ($blacklist as $blacklisted) {
+			if (isset($this->viewVars[$blacklisted])) {
+				unset($this->viewVars[$blacklisted]);
+			}
+		}
+
+		$format = $textarea ? '<textarea>%s</textarea>' : '%s';
 
 		if ($this->params['url']['ext'] == 'json') {
 			header("Pragma: no-cache");
 			header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 			header("Last-Modified: " . gmdate('D, d M Y H:i:s') . ' GMT');
-			header('Content-type: application/json');
 
-			header("X-JSON: " . $this->object($this->viewVars));
+			if (!$textarea) {
+				header('Content-type: application/json');
+			}
 
-			return $this->object($this->viewVars);
+			if (!$noXjson) {
+				header("X-JSON: " . $this->object($this->viewVars));
+			}
+
+			return sprintf($format, $this->object($this->viewVars));
 		}
+
 		header('Content-type: application/xml');
-		return $this->toXml($this->viewVars);
+		return sprintf($format, $this->toXml($this->viewVars));
 	}
 
 /**
@@ -254,6 +274,7 @@ class WebserviceView extends Object {
 /**
  * Encode a string into JSON.  Converts and escapes necessary characters.
  *
+ * @param string $string The string that needs to be utf8->hex encoded
  * @return void
  */
 	function _utf8ToHex($string) {
@@ -280,7 +301,6 @@ class WebserviceView extends Object {
 				case $ord == 0x22:
 				case $ord == 0x2F:
 				case $ord == 0x5C:
-				case $ord == 0x27:
 					$return .= '\\' . $string{$i};
 					break;
 				case (($ord >= 0x20) && ($ord <= 0x7F)):
