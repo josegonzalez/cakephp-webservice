@@ -4,7 +4,7 @@
  *
  * Triggers the Webservice View
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
  * Copyright 2010, Jose Diaz-Gonzalez
  *
@@ -17,7 +17,7 @@
  * @link        http://github.com/josegonzalez/webservice_plugin
  * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-class WebserviceComponent extends Object {
+class WebserviceComponent extends Component {
 
 /**
  * Called before the Controller::beforeFilter().
@@ -29,7 +29,7 @@ class WebserviceComponent extends Object {
  */
 	function initialize(&$controller, $settings = array()) {
 		if (in_array($controller->RequestHandler->ext, array('json', 'xml'))) {
-			$controller->view = 'Webservice.Webservice';
+			$controller->viewClass = 'Webservice.Webservice';
 		}
 	}
 
