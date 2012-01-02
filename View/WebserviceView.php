@@ -4,16 +4,16 @@
  *
  * Renders the data as either json or xml
  *
- * PHP versions 4 and 5
+ * PHP version 5
  *
- * Copyright 2010, Jose Diaz-Gonzalez
+ * Copyright 2010-2012, Jose Diaz-Gonzalez
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the below copyright notice.
  *
- * @copyright   Copyright 2010, Jose Diaz-Gonzalez
- * @package     webservice
- * @subpackage  webservice.views
+ * @copyright   Copyright 2010-2012, Jose Diaz-Gonzalez
+ * @package     Webservice
+ * @subpackage  Webservice.View
  * @link        http://github.com/josegonzalez/webservice_plugin
  * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
@@ -31,12 +31,24 @@ class WebserviceView extends View {
 		'viewVars', 'params'
 	);
 
+/**
+ * Blacklisted view variables
+ *
+ * @var string
+ */
 	protected $_webserviceBlacklistVars = array(
 		'debugToolbarPanels',
 		'debugToolbarJavascript',
 		'webserviceTextarea',
 		'webserviceNoxjson',
 	);
+
+/**
+ * Include the session in output
+ *
+ * @var boolean
+ **/
+	protected $_webserviceSessionFlash = false;
 
 /**
  * Constructor
@@ -51,10 +63,20 @@ class WebserviceView extends View {
 					$controller->webserviceBlacklistVars
 				);
 			}
+
+			if (isset($controller->webserviceSessionFlash)) {
+				$this->_webserviceSessionFlash = $controller->webserviceSessionFlash;
+			}
 		}
+
 		parent::__construct($controller);
 	}
 
+/**
+ * Renders a webservice response
+ *
+ * @return void
+ */
 	public function render() {
 		Configure::write('debug', 0);
 		$textarea  = isset($this->viewVars['webserviceTextarea']);
@@ -70,13 +92,20 @@ class WebserviceView extends View {
 			$this->viewVars['validationErrors'] = $this->validationErrors;
 		}
 
+		if ($this->_webserviceSessionFlash) {
+			$this->viewVars['messages'] = CakeSession::read('Message');
+			CakeSession::delete('Message');
+			if (empty($this->viewVars['messages'])) {
+				unset($this->viewVars['messages']);
+			}
+		}
+
 		$format = $textarea ? '<textarea>%s</textarea>' : '%s';
 
 		$ext = 'json';
 		if (!empty($this->params->params['ext'])) {
 			$ext = $this->params->params['ext'];
 		}
-
 
 		if ($ext == 'json') {
 			$this->_header("Pragma: no-cache");
@@ -88,11 +117,12 @@ class WebserviceView extends View {
 				$this->_header('Content-type: application/json');
 			}
 
+			$output = json_encode($this->viewVars);
 			if (!$noXjson) {
-				$this->_header("X-JSON: " . json_encode($this->viewVars));
+				$this->_header("X-JSON: " . $output);
 			}
 
-			return sprintf($format, json_encode($this->viewVars));
+			return sprintf($format, $output);
 		}
 
 		$this->_header('Content-type: application/xml');
@@ -165,6 +195,12 @@ class WebserviceView extends View {
 		return (is_array($variable) && 0 !== count(array_diff_key($variable, array_keys(array_keys($variable)))));
 	}
 
+/**
+ * Dummy header method to allow for mocking in tests
+ *
+ * @param string $header 
+ * @return void
+ */
 	protected function _header($header) {
 		header($header);
 	}

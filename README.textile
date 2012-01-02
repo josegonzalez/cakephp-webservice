@@ -10,8 +10,7 @@ Later, I wanted to move an entire controller to webservice, but have it also opt
 
 h2. Requirements
 
-* CakePHP 1.3 (untested in 1.2)
-* PHP5.2 for native json_decode
+* CakePHP 2.x
 
 h2. Installation
 
@@ -105,6 +104,67 @@ class PostsController extends AppController {
 ?>
 </code></pre>
 
+The @$webserviceBlacklist@ property will be merged into the @settings@ array if available.
+
+You can also specify @*@ to blacklist all actions.
+
+<pre><code><?php
+class PostsController extends AppController {
+
+	public $webserviceBlacklist = array('*');
+
+}
+?>
+</code></pre>
+
+h3. Blacklisting variables
+
+It is possible to blacklist certain variables from being output. By default, these are the following reserved variables:
+
+* @debugToolbarPanels@
+* @debugToolbarJavascript@
+* @webserviceTextarea@
+* @webserviceNoxjson@
+
+To blacklist more variables, you can use the @$webserviceBlacklistVars@ controller property.
+
+<pre><code><?php
+class PostsController extends AppController {
+
+	public $webserviceBlacklistVars = array(
+		'_metas'
+	);
+
+	public function index() {
+		$someMetaInfo = array('some', 'meta', 'info');
+		$this->set('_metas', $someMetaInfo); // Will not be in output
+	}
+
+}
+?>
+</code></pre>
+
+
+h3. Outputting session flash messages
+
+Session flash messages are not output by default, but this can be turned on through a controller property:
+
+<pre><code><?php
+class PostsController extends AppController {
+
+/**
+ * Include the session flash messages in webservice output
+ *
+ * @var string
+ **/
+	public $webserviceSessionFlash = true;
+
+}
+?>
+</code></pre>
+
+This will include all the relevant data for you to decide how to output the flash messages on your current page.
+
 h2. TODO
 
 1. Unit Tests
@@ -113,7 +173,7 @@ h2. TODO
 
 h2. License
 
-Copyright (c) 2010-2011 Jose Diaz-Gonzalez
+Copyright (c) 2010-2012 Jose Diaz-Gonzalez
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -6,14 +6,14 @@
  *
  * PHP version 5
  *
- * Copyright 2010, Jose Diaz-Gonzalez
+ * Copyright 2010-2012, Jose Diaz-Gonzalez
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the below copyright notice.
  *
- * @copyright   Copyright 2010, Jose Diaz-Gonzalez
- * @package     webservice
- * @subpackage  webservice.controllers.components
+ * @copyright   Copyright 2010-2012, Jose Diaz-Gonzalez
+ * @package     Webservice
+ * @subpackage  Webservice.Controller.Component
  * @link        http://github.com/josegonzalez/webservice_plugin
  * @license     MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
