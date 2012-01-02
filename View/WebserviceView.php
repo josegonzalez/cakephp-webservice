@@ -38,21 +38,6 @@ class WebserviceView extends View {
 	public $xml_version = '1.0';
 
 /**
- * Array of parameter data
- *
- * @var array Parameter data
- */
-	public $params = array();
-
-/**
- * Variables for the view
- *
- * @var array
- * @access public
- */
-	public $viewVars = array();
-
-/**
  * List of variables to collect from the associated controller
  *
  * @var array
@@ -85,7 +70,12 @@ class WebserviceView extends View {
 
 		$format = $textarea ? '<textarea>%s</textarea>' : '%s';
 
-		if ($this->params['url']['ext'] == 'json') {
+		$ext = 'json';
+		if (!empty($this->params->params['ext'])) {
+			$ext = $this->params->params['ext'];
+		}
+
+		if ($ext == 'json') {
 			$this->_header("Pragma: no-cache");
 			$this->_header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
 			$this->_header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
