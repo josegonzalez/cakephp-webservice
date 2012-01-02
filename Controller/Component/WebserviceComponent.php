@@ -27,8 +27,27 @@ class WebserviceComponent extends Component {
  * @access public
  * @link http://book.cakephp.org/view/65/MVC-Class-Access-Within-Components
  */
-	function initialize(&$controller, $settings = array()) {
-		if (in_array($controller->RequestHandler->ext, array('json', 'xml'))) {
+	public function initialize(&$controller, $settings = array()) {
+		$settings = array_merge(array(
+			'blacklist' => array(),
+		), (array) $settings);
+
+		if (isset($controller->webserviceBlacklist)) {
+			$settings['blacklist'] = array_merge(
+				(array) $settings['blacklist'],
+				(array) $controller->webserviceBlacklist
+			);
+		}
+
+		if (in_array('*', $settings['blacklist'])) {
+			return;
+		}
+
+		if (in_array($controller->request->params['action'], $settings['blacklist'])) {
+			return;
+		}
+
+		if (in_array($controller->request->ext, array('json', 'xml'))) {
 			$controller->viewClass = 'Webservice.Webservice';
 		}
 	}
