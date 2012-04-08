@@ -1,4 +1,4 @@
-# Webservice Plugin
+# Webservice Plugin 2.0
 
 For those times when you need a quick and dirty webservice for your data.
 
