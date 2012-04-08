@@ -14,6 +14,8 @@ h2. Requirements
 
 h2. Installation
 
+For 1.3 support, please see the "1.3 branch":https://github.com/josegonzalez/webservice_plugin/tree/1.3.
+
 _[Manual]_
 
 # Download this: http://github.com/josegonzalez/webservice_plugin/zipball/master
