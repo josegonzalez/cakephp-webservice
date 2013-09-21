@@ -1,0 +1,29 @@
+{
+    "name": "josegonzalez/cakephp-webservice",
+    "type": "cakephp-plugin",
+    "description": "CakePHP plugin that takes the data you set and automatically serves it as JSON and XML",
+    "keywords":[
+        "cakephp",
+        "webservice",
+        "view"
+    ],
+    "homepage": "http://github.com/josegonzalez/cakephp-webservice",
+    "authors":[
+        {
+            "name":"Jose Diaz-Gonzalez",
+            "role":"Author"
+        }
+    ],
+    "license": "MIT",
+    "support":{
+        "source":"https://github.com/josegonzalez/cakephp-webservice",
+        "issues":"https://github.com/josegonzalez/cakephp-webservice/issues"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "composer/installers": "*"
+    },
+    "extra": {
+        "installer-name": "Webservice"
+    }
+}
