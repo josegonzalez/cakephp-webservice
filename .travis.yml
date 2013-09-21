@@ -10,12 +10,6 @@ matrix:
   include:
     - php: 5.4
       env:
-        - DB=mysql CAKE_VERSION=master COVERALLS=1
-    - php: 5.4
-      env:
-        - DB=mysql CAKE_VERSION=master PHPCS=1
-    - php: 5.4
-      env:
         - DB=mysql CAKE_VERSION=master FOC_VALIDATE=1
 
 before_script:
